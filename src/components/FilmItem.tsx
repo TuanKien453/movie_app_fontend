@@ -1,8 +1,8 @@
 // import { useNavigate } from "react-router-dom";
-import styles from "../style/FilmItem.css"
+import styles from "../style/FilmItem.module.css";
 import play_button from "../resource/play-button-svgrepo-com.svg";
 
-export function FilmItem() {
+export default function FilmItem() {
 
     // const navigate = useNavigate();
     // const addToCartHandler = () => {

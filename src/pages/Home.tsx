@@ -1,5 +1,5 @@
 import Nav from "../components/Nav.tsx";
-import {FilmItem} from "../components/FilmItem.tsx";
+import FilmItem from "../components/FilmItem.tsx";
 function Home(){
 
     return(
