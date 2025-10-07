@@ -1,14 +1,21 @@
 import { BaseEntity } from "../shared/BaseModel.ts";
+import { Part } from "./Part.ts";
+import { MovieCrew } from "./MovieCrew.ts";
+import { MovieGenres } from "./MovieGenres.ts";
 
 export class Movie extends BaseEntity {
     title: string;
     description?: string;
     releaseDate: Date;
-    duration: number;
+    duration: number; // in minutes
     country?: string;
     ageRating?: string;
     posterUrl?: string;
     trailerUrl?: string;
+
+    parts?: Part[];
+    movieCrews?: MovieCrew[];
+    movieGenres?: MovieGenres[];
 
     constructor(data: any) {
         super(data);
@@ -20,5 +27,9 @@ export class Movie extends BaseEntity {
         this.ageRating = data.ageRating;
         this.posterUrl = data.posterUrl;
         this.trailerUrl = data.trailerUrl;
+
+        this.parts = data.parts?.map((p: any) => new Part(p));
+        this.movieCrews = data.movieCrews?.map((mc: any) => new MovieCrew(mc));
+        this.movieGenres = data.movieGenres?.map((mg: any) => new MovieGenres(mg));
     }
 }
