@@ -1,6 +1,19 @@
+import SearchBar from "./SearchBar.tsx";
+import {SearchResultItem} from "./SearchResultItem.tsx";
 
 
 export default function Nav() {
+    const searchResults = [
+        { id: 1, name: "Avengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: EndgameAvengers: Endgame", imageUrl: "https://picsum.photos/id/1011/200/200" },
+        { id: 2, name: "Inception", imageUrl: "https://picsum.photos/id/1012/200/200" },
+        { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
+        { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
+        { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
+        { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
+        { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
+        { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
+    ];
+
     return (
         <nav className="w-100 bg-white shadow-sm px-3 py-2">
             <div className="row align-items-center">
@@ -13,10 +26,12 @@ export default function Nav() {
 
                 {/* Center */}
                 <div className="col-4 d-flex justify-content-center">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="form-control form-control-sm rounded-pill w-75"
+                    <SearchBar
+                        handleChange={(keyword) => console.log(keyword)}
+                        results={searchResults}
+                        renderResult={(item) => (
+                            <SearchResultItem imageUrl={item.imageUrl} title={item.name} />
+                        )}
                     />
                 </div>
 
