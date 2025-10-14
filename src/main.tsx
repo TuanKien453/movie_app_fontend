@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.tsx";
-import About from "./pages/About.tsx";
+import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App.tsx';
+import './style/index.css';
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
@@ -11,13 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-
-                
-                <Route path="*" element={<>Not Found</>} />
-            </Routes>
+            <App />
         </BrowserRouter>
     </React.StrictMode>
 );
