@@ -1,4 +1,5 @@
 import { BaseEntity } from "../shared/BaseModel.ts";
+import { Part } from "./Part.ts";
 
 export class Episode extends BaseEntity {
     partId: number;
@@ -7,6 +8,8 @@ export class Episode extends BaseEntity {
     duration: number; // in seconds
     videoUrl: string;
 
+    part?: Part;
+
     constructor(data: any) {
         super(data);
         this.partId = data.partId;
@@ -14,5 +17,7 @@ export class Episode extends BaseEntity {
         this.title = data.title;
         this.duration = data.duration;
         this.videoUrl = data.videoUrl;
+
+        this.part = data.part ? new Part(data.part) : undefined;
     }
 }
