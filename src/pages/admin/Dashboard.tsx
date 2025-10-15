@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import InfoWidget from '../components/InfoWidget';
-import TrafficChart from '../components/TrafficChart';
-import SocialStats from '../components/SocialStats';
-import UserTable from '../components/UserTable';
-import {useLogin} from "../context/LoginContext.tsx";
+import InfoWidget from '../../components/dashboard/InfoWidget';
+import TrafficChart from '../../components/dashboard/TrafficChart.tsx';
+import SocialStats from '../../components/dashboard/SocialStats';
+import UserTable from '../../components/dashboard/UserTable';
+import {useLogin} from "../../context/LoginContext.tsx";
 
 const Dashboard: React.FC = () => {
 

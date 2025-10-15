@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {LoginProvider} from "./context/LoginContext.tsx";
 import Login from "./pages/Login.tsx";
 import {MovieProvider} from "./context/MovieContext.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
+import Dashboard from "./pages/admin/Dashboard.tsx";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );

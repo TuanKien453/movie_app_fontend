@@ -5,7 +5,6 @@ import {
 import {Link} from "react-router-dom";
 
 const Sidebar: React.FC = () => {
-    // State để quản lý việc đóng/mở các menu con
     const [componentsOpen, setComponentsOpen] = useState(false);
     const [pagesOpen, setPagesOpen] = useState(false);
 
