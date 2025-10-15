@@ -1,10 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import InfoWidget from '../components/InfoWidget';
 import TrafficChart from '../components/TrafficChart';
 import SocialStats from '../components/SocialStats';
 import UserTable from '../components/UserTable';
+import {useLogin} from "../context/LoginContext.tsx";
 
 const Dashboard: React.FC = () => {
+
+    const {isLoggedIn} = useLogin();
+
+    useEffect(() => {
+        if (isLoggedIn==false) {
+            window.location.href = '/login';
+        }
+    }, [isLoggedIn]);
+
+
     return (
         <>
             <div className="row g-4 mb-4">

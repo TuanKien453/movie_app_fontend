@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home.tsx";
+import About from "./pages/About.tsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App.tsx';
-import './style/index.css';
+import {LoginProvider} from "./context/LoginContext.tsx";
+import Login from "./pages/Login.tsx";
+import {MovieProvider} from "./context/MovieContext.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
@@ -11,7 +15,22 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <LoginProvider>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <MovieProvider>
+                                <Home />
+                            </MovieProvider>
+                        }
+                    />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="*" element={<>Not Found</>} />
+                </Routes>
+            </LoginProvider>
         </BrowserRouter>
     </React.StrictMode>
 );

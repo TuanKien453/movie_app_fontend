@@ -1,5 +1,6 @@
 import SearchBar from "./SearchBar.tsx";
 import {SearchResultItem} from "./SearchResultItem.tsx";
+import {useLogin} from "../context/LoginContext.tsx";
 
 
 export default function Nav() {
@@ -13,6 +14,8 @@ export default function Nav() {
         { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
         { id: 3, name: "Interstellar", imageUrl: "https://picsum.photos/id/1013/200/200" },
     ];
+
+    const {isLoggedIn} = useLogin();
 
     return (
         <nav className="w-100 bg-white shadow-sm px-3 py-2">
@@ -35,9 +38,22 @@ export default function Nav() {
                     />
                 </div>
 
-                {/* Right */}
                 <div className="col-4 d-flex justify-content-end">
-                    <a href="/profile" className="text-dark text-decoration-none">Profile</a>
+                    {isLoggedIn ? (
+                        <button
+                            className="btn btn-outline-dark"
+                            onClick={() => (window.location.href = "/dashboard")}
+                        >
+                            Admin
+                        </button>
+                    ) : (
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => (window.location.href = "/login")}
+                        >
+                            Login
+                        </button>
+                    )}
                 </div>
             </div>
         </nav>

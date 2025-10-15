@@ -1,17 +1,15 @@
-import { useLogin } from "../context/LoginContext.tsx";
+import { AuthHelper } from "./AuthHelper";
 
 export async function apiCall(
     url: string,
     method: string,
     body?: any,
     authRequired: boolean = false,
+    alterUnauthorized?: () => void,
     rawResponse: boolean = false,
     signal?: AbortSignal
 ): Promise<any> {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { getAccessToken, setLogout } = useLogin();
-
-    const token = authRequired ? getAccessToken() : null;
+    const accessToken = AuthHelper.getToken();
 
     const options: RequestInit = {
         method,
@@ -19,8 +17,8 @@ export async function apiCall(
         signal,
     };
 
-    if (authRequired && token) {
-        (options.headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
+    if (accessToken) {
+        (options.headers as Record<string, string>)['Authorization'] = `Bearer ${accessToken}`;
     }
 
     if (body) {
@@ -30,7 +28,8 @@ export async function apiCall(
     const response = await fetch(url, options);
 
     if (response.status === 401 && authRequired) {
-        setLogout();
+        if (alterUnauthorized) alterUnauthorized();
+        else AuthHelper.handleUnauthorized();
         throw new Error("Unauthorized");
     }
 
