@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
-    Speedometer2, Droplet, Pencil, Puzzle, Send, PieChart, FileEarmarkText, Star, Bell, ColumnsGap, FileEarmark, Book, ChevronDown
+    Speedometer2, Film, Tag, Puzzle, FileEarmark, ChevronDown, PeopleFill
 } from 'react-bootstrap-icons';
+import {Link} from "react-router-dom";
 
 const Sidebar: React.FC = () => {
     // State để quản lý việc đóng/mở các menu con
@@ -14,21 +15,25 @@ const Sidebar: React.FC = () => {
             <nav className="flex-grow-1">
                 <ul className="nav flex-column">
                     <li className="nav-item mb-2">
-                        <a className="nav-link text-white active rounded d-flex align-items-center" href="#">
+                        <Link to="/dashboard" className="nav-link text-white active rounded d-flex align-items-center" >
                             <Speedometer2 className="me-3" /> Dashboard
-                        </a>
+                        </Link>
                     </li>
                     <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <Droplet className="me-3" /> Colors
-                        </a>
+                        <Link to="/movies" className="nav-link text-white rounded d-flex align-items-center">
+                            <Film className="me-3" /> Movies
+                        </Link>
                     </li>
                     <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <Pencil className="me-3" /> Typography
-                        </a>
+                        <Link to="/genres" className="nav-link text-white rounded d-flex align-items-center">
+                            <Tag className="me-3" /> Genre
+                        </Link>
                     </li>
-
+                    <li className="nav-item mb-2">
+                        <Link to="/humans" className="nav-link text-white rounded d-flex align-items-center">
+                            <PeopleFill className="me-3" /> Human
+                        </Link>
+                    </li>
                     <li className="nav-title mt-3 mb-2">COMPONENTS</li>
 
                     <li className="nav-item mb-2">
@@ -52,40 +57,6 @@ const Sidebar: React.FC = () => {
                         )}
                     </li>
 
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <Send className="me-3" /> Buttons
-                        </a>
-                    </li>
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <PieChart className="me-3" /> Charts
-                        </a>
-                    </li>
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <FileEarmarkText className="me-3" /> Forms
-                        </a>
-                    </li>
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <Star className="me-3" /> Icons
-                        </a>
-                    </li>
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <Bell className="me-3" /> Notifications
-                        </a>
-                    </li>
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex justify-content-between align-items-center" href="#">
-                            <div className="d-flex align-items-center">
-                                <ColumnsGap className="me-3" /> Widgets
-                            </div>
-                            <span className="badge bg-info">NEW</span>
-                        </a>
-                    </li>
-
                     <li className="nav-title mt-3 mb-2">EXTRAS</li>
                     <li className="nav-item mb-2">
                         <a
@@ -107,11 +78,7 @@ const Sidebar: React.FC = () => {
                             </ul>
                         )}
                     </li>
-                    <li className="nav-item mb-2">
-                        <a className="nav-link text-white rounded d-flex align-items-center" href="#">
-                            <Book className="me-3" /> Docs
-                        </a>
-                    </li>
+
 
                 </ul>
             </nav>
