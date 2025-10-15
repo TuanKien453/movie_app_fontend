@@ -1,8 +1,8 @@
 import React from 'react';
-import InfoWidget from '../components/InfoWidget';
-import TrafficChart from '../components/TrafficChart';
-import SocialStats from '../components/SocialStats';
-import UserTable from '../components/UserTable';
+import InfoWidget from '../../components/dashboard/InfoWidget.tsx';
+import TrafficChart from '../../components/TrafficChart.tsx';
+import SocialStats from '../../components/dashboard/SocialStats.tsx';
+import UserTable from '../../components/dashboard/UserTable.tsx';
 
 const Dashboard: React.FC = () => {
     return (
@@ -31,7 +31,6 @@ const Dashboard: React.FC = () => {
 
             <div className="row g-4 mb-4">
                 <div className="col-md-6">
-                    {/* Component này có thể tạo riêng, nhưng để đơn giản ta đặt ở đây */}
                     <div className="card h-100">
                         <div className="card-body">
                             <div className="mb-4">

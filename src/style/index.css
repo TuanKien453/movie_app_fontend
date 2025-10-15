@@ -79,3 +79,8 @@ code {
 .table strong {
     color: #fff; /* Làm cho chữ in đậm nổi bật hơn */
 }
+
+/* === SỬA MÀU CHỮ TIÊU ĐỀ WIDGET === */
+.card-body .text-muted {
+    color: #8a93a2 !important;
+}
