@@ -4,6 +4,12 @@ import TrafficChart from '../../components/dashboard/TrafficChart.tsx';
 import SocialStats from '../../components/dashboard/SocialStats';
 import UserTable from '../../components/dashboard/UserTable';
 import {useLogin} from "../../context/LoginContext.tsx";
+import InfoWidget from '../../components/dashboard/InfoWidget.tsx';
+import TrafficChart from "../../components/TrafficChart.tsx";
+import SocialStats from "../../components/dashboard/SocialStats.tsx";
+import UserTable from "../../components/dashboard/UserTable.tsx";
+import {useLogin} from "../../context/LoginContext.tsx";
+
 
 const Dashboard: React.FC = () => {
 
