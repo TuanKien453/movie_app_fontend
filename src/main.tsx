@@ -8,6 +8,11 @@ import {LoginProvider} from "./context/LoginContext.tsx";
 import Login from "./pages/Login.tsx";
 import {MovieProvider} from "./context/MovieContext.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
+import DashboardLayout from "./layouts/DashboardLayout.tsx";
+import MoviePage from "./pages/admin/MoviePage.tsx";
+import GenrePage from "./pages/admin/GenrePage.tsx";
+import HumanPage from "./pages/admin/HumanPage.tsx";
+import './style/index.css';
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
@@ -27,7 +32,12 @@ root.render(
                     />
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<DashboardLayout />}>
+                        <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="movies" element={<MoviePage />} />
+                        <Route path="genres" element={<GenrePage />} />
+                        <Route path="humans" element={<HumanPage />} />
+                    </Route>
                     <Route path="*" element={<>Not Found</>} />
                 </Routes>
             </LoginProvider>
