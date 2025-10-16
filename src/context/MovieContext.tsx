@@ -46,17 +46,19 @@ export function MovieProvider({ children }: MovieProviderProps) {
     const fetchMovies = async () => {
         setLoading(true);
         try {
-            const response: ODataResponse<Movie> = await movieApi.get(
-                false,
-                true,
-                filter?.join(" and"),
-                select?.join(","),
+            const response: ODataResponse<Movie> = await movieApi.get({
+                authRequired: false,
+                count: true,
+                filter: filter ? filter.join(" and ") : undefined,
+                select: select ? select.join(",") : undefined,
                 expand,
-                order?.join(","),
-                pageSize,
-                pageSize * currentPage
-            );
+                order: order ? order.join(",") : undefined,
+                top: pageSize,
+                skip: pageSize * currentPage
+            });
+
             setMovies(response.value);
+
             if (response["@odata.count"] !== undefined) {
                 setMaxPage(Math.ceil(response["@odata.count"] / pageSize));
             }

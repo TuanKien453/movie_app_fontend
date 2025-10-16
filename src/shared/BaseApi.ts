@@ -13,15 +13,28 @@ export abstract class BaseApi<T extends BaseEntity> {
 
 
     async get(
-        authRequired: boolean = false,
-        count: boolean = false,
-        filter?: string,
-        select?: string,
-        expand?: string,
-        order?: string,
-        top?: number,
-        skip?: number
+        options: {
+            authRequired?: boolean
+            count?: boolean
+            filter?: string
+            select?: string
+            expand?: string
+            order?: string
+            top?: number
+            skip?: number
+        } = {}
     ): Promise<ODataResponse<T>> {
+
+        const {
+            authRequired = false,
+            count = false,
+            filter,
+            select,
+            expand,
+            order,
+            top,
+            skip
+        } = options
 
         const params: string[] = []
 
@@ -29,7 +42,7 @@ export abstract class BaseApi<T extends BaseEntity> {
         if (filter) params.push(`$filter=${encodeURIComponent(filter)}`)
         if (select) params.push(`$select=${encodeURIComponent(select)}`)
         if (expand) params.push(`$expand=${encodeURIComponent(expand)}`)
-        if (order) params.push(`$order=${encodeURIComponent(order)}`)
+        if (order) params.push(`$orderby=${encodeURIComponent(order)}`)
         if (top !== undefined) params.push(`$top=${top}`)
         if (skip !== undefined) params.push(`$skip=${skip}`)
 

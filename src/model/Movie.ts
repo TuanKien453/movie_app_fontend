@@ -9,8 +9,8 @@ export class Movie extends BaseEntity {
     releaseDate: Date;
     duration: number; // in minutes
     country?: string;
-    posterUrl?: string;
-    trailerUrl?: string;
+    posterSource?: string;
+    trailerSource?: string;
 
     parts?: Part[];
     movieCrews?: MovieCrew[];
@@ -23,8 +23,8 @@ export class Movie extends BaseEntity {
         this.releaseDate = new Date(data.releaseDate);
         this.duration = data.duration;
         this.country = data.country;
-        this.posterUrl = data.posterUrl;
-        this.trailerUrl = data.trailerUrl;
+        this.posterSource = data.posterUrl;
+        this.trailerSource = data.trailerUrl;
 
         this.parts = data.parts?.map((p: any) => new Part(p));
         this.movieCrews = data.movieCrews?.map((mc: any) => new MovieCrew(mc));

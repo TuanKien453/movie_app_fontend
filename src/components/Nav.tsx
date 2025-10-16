@@ -19,12 +19,13 @@ export default function Nav() {
 
     const {isLoggedIn} = useLogin();
     const movieApi = useMemo(()=>new MovieApi(),[]);
-    const onSearch = (keyword:string)=>{
-        movieApi.get(false,false,`contains(Title, '${keyword}')`,undefined,undefined,undefined,10)
-            .then((data)=>{
+    const onSearch = (keyword: string) => {
+        movieApi.get({ filter: `contains(Title,'${keyword}')`,top: 10}).then(data => {
             console.log(data)
+        }).catch(err => {
+            console.error("Search failed:", err)
         });
-    }
+    };
 
     return (
         <nav className="w-100 bg-white shadow-sm px-3 py-2">
