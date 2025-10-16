@@ -17,7 +17,10 @@ export abstract class BaseApi<T extends BaseEntity> {
         count: boolean = false,
         filter?: string,
         select?: string,
-        expand?: string
+        expand?: string,
+        order?: string,
+        top?: number,
+        skip?: number
     ): Promise<ODataResponse<T>> {
 
         const params: string[] = []
@@ -26,6 +29,9 @@ export abstract class BaseApi<T extends BaseEntity> {
         if (filter) params.push(`$filter=${encodeURIComponent(filter)}`)
         if (select) params.push(`$select=${encodeURIComponent(select)}`)
         if (expand) params.push(`$expand=${encodeURIComponent(expand)}`)
+        if (order) params.push(`$order=${encodeURIComponent(order)}`)
+        if (top !== undefined) params.push(`$top=${top}`)
+        if (skip !== undefined) params.push(`$skip=${skip}`)
 
         const query = params.length > 0 ? `?${params.join("&")}` : ""
         const url = `${this.apiUrl}${query}`

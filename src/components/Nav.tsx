@@ -1,6 +1,8 @@
 import SearchBar from "./SearchBar.tsx";
 import {SearchResultItem} from "./SearchResultItem.tsx";
 import {useLogin} from "../context/LoginContext.tsx";
+import {useMemo} from "react";
+import {MovieApi} from "../api/MovieApi.tsx";
 
 
 export default function Nav() {
@@ -16,6 +18,13 @@ export default function Nav() {
     ];
 
     const {isLoggedIn} = useLogin();
+    const movieApi = useMemo(()=>new MovieApi(),[]);
+    const onSearch = (keyword:string)=>{
+        movieApi.get(false,false,`contains(Title, '${keyword}')`,undefined,undefined,undefined,10)
+            .then((data)=>{
+            console.log(data)
+        });
+    }
 
     return (
         <nav className="w-100 bg-white shadow-sm px-3 py-2">
@@ -30,7 +39,7 @@ export default function Nav() {
                 {/* Center */}
                 <div className="col-4 d-flex justify-content-center">
                     <SearchBar
-                        handleChange={(keyword) => console.log(keyword)}
+                        handleChange={onSearch}
                         results={searchResults}
                         renderResult={(item) => (
                             <SearchResultItem imageUrl={item.imageUrl} title={item.name} />

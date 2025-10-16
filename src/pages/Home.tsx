@@ -1,6 +1,7 @@
 import Nav from "../components/Nav.tsx";
 import FilmItem from "../components/FilmItem.tsx";
 import PaginationComponent from "../components/PaginationComponent.tsx";
+import TusUpload from "../components/TusUpload.tsx";
 
 function Home() {
     const films = [
@@ -21,6 +22,7 @@ function Home() {
     return (
         <>
             <Nav />
+            <TusUpload forEpisodeId={"6"}></TusUpload>
             <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <div></div>

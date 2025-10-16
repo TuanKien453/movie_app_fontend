@@ -6,7 +6,7 @@ export class Episode extends BaseEntity {
     episodeNumber: number;
     title: string;
     duration: number; // in seconds
-    videoUrl: string;
+    videoSource: string;
 
     part?: Part;
 
@@ -16,7 +16,7 @@ export class Episode extends BaseEntity {
         this.episodeNumber = data.episodeNumber;
         this.title = data.title;
         this.duration = data.duration;
-        this.videoUrl = data.videoUrl;
+        this.videoSource = data.videoUrl;
 
         this.part = data.part ? new Part(data.part) : undefined;
     }

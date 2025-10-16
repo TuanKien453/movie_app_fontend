@@ -9,7 +9,6 @@ export class Movie extends BaseEntity {
     releaseDate: Date;
     duration: number; // in minutes
     country?: string;
-    ageRating?: string;
     posterUrl?: string;
     trailerUrl?: string;
 
@@ -24,7 +23,6 @@ export class Movie extends BaseEntity {
         this.releaseDate = new Date(data.releaseDate);
         this.duration = data.duration;
         this.country = data.country;
-        this.ageRating = data.ageRating;
         this.posterUrl = data.posterUrl;
         this.trailerUrl = data.trailerUrl;
 
