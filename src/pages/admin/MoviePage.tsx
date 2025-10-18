@@ -7,11 +7,11 @@ const MoviePage: React.FC = () => {
             <h2 className="text-white mb-4">Movie Management</h2>
 
             <div className="row g-4">
-                {mockMovies.map(movie => ( // Duyệt qua mảng mockMovies
+                {mockMovies.map(movie => (
                     <div key={movie.id} className="col-lg-3 col-md-4 col-sm-6">
                         <div className="card text-white bg-secondary h-100">
                             <img
-                                src={movie.posterUrl}
+                                src={movie.posterSource}
                                 className="card-img-top"
                                 alt={movie.title}
                                 style={{ height: '300px', objectFit: 'cover' }}

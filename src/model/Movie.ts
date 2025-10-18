@@ -1,3 +1,4 @@
+// Movie.ts (đã sửa)
 import { BaseEntity } from "../shared/BaseModel.ts";
 import { Part } from "./Part.ts";
 import { MovieCrew } from "./MovieCrew.ts";
@@ -6,8 +7,8 @@ import { MovieGenres } from "./MovieGenres.ts";
 export class Movie extends BaseEntity {
     title: string;
     description?: string;
-    releaseDate: Date;
-    duration: number; // in minutes
+    releaseDate?: Date | null;
+    duration: number;
     country?: string;
     posterSource?: string;
     trailerSource?: string;
@@ -20,7 +21,9 @@ export class Movie extends BaseEntity {
         super(data);
         this.title = data.title;
         this.description = data.description;
-        this.releaseDate = new Date(data.releaseDate);
+
+        this.releaseDate = data.releaseDate ? new Date(data.releaseDate) : null;
+
         this.duration = data.duration;
         this.country = data.country;
         this.posterSource = data.posterUrl;

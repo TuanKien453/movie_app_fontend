@@ -2,7 +2,7 @@ import SearchBar from "./SearchBar.tsx";
 import {SearchResultItem} from "./SearchResultItem.tsx";
 import {useLogin} from "../context/LoginContext.tsx";
 import {useMemo} from "react";
-import {MovieApi} from "../api/MovieApi.tsx";
+import {MovieApi} from "../api/MovieApi.ts";
 
 
 export default function Nav() {

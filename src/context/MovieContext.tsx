@@ -1,6 +1,6 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
 import type { Movie } from "../model/Movie.ts";
-import { MovieApi } from "../api/MovieApi.tsx";
+import { MovieApi } from "../api/MovieApi.ts";
 import type { ODataResponse } from "../shared/ODataResponse.ts";
 
 interface MovieContextType {

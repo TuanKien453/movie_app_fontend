@@ -13,6 +13,8 @@ import MoviePage from "./pages/admin/MoviePage.tsx";
 import GenrePage from "./pages/admin/GenrePage.tsx";
 import HumanPage from "./pages/admin/HumanPage.tsx";
 import './style/index.css';
+import GenreTestPage from "./pages/GenreTestPage.tsx";
+
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
@@ -39,6 +41,8 @@ root.render(
                         <Route path="humans" element={<HumanPage />} />
                     </Route>
                     <Route path="*" element={<>Not Found</>} />
+                    <Route path="/admin/test-genre" element={<GenreTestPage />} />
+
                 </Routes>
             </LoginProvider>
         </BrowserRouter>

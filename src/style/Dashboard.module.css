@@ -1,0 +1,87 @@
+.body {
+    background-color: #212631 !important;
+    color: #c8c8c8 !important;
+}
+
+/* === CARD, BOX, CHART CONTAINER === */
+.card,
+.card-body,
+.card-header,
+.card-footer {
+    background-color: #2a2f3c !important;
+    color: #c8c8c8 !important;
+    border: 1px solid #3c414d !important;
+}
+
+/* Ghi đè mạnh cho các lớp bootstrap hay dùng */
+.bg-white,
+.bg-light,
+.text-bg-light,
+.text-bg-white {
+    background-color: #2a2f3c !important;
+    color: #c8c8c8 !important;
+}
+
+/* Một số lib tạo inline style nền trắng → fix luôn */
+[class*="card"],
+[class*="Card"],
+[class*="widget"],
+[class*="Widget"],
+[class*="chart"],
+[class*="Chart"] {
+    background-color: #2a2f3c !important;
+    color: #c8c8c8 !important;
+}
+
+/* ChartJS / Recharts wrapper */
+.recharts-wrapper,
+.recharts-surface {
+    background-color: #2a2f3c !important;
+}
+
+/* Sidebar & header */
+.sidebar {
+    background-color: #2a2f3c !important;
+    width: 250px;
+    border-right: 1px solid #3c414d;
+}
+
+.header {
+    background-color: #2a2f3c !important;
+    border-bottom: 1px solid #3c414d;
+}
+
+/* Active / hover nav link */
+.nav-link.active,
+.nav-link:hover {
+    background-color: #3c414d !important;
+    color: #fff !important;
+}
+
+/* Progress bar */
+.progress {
+    height: 0.5rem;
+    background-color: #3c414d !important;
+}
+
+/* Table */
+.table {
+    --bs-table-bg: transparent !important;
+    --bs-table-border-color: #444 !important;
+    --bs-table-striped-bg: #3c414d !important;
+    color: #c8c8c8 !important;
+}
+
+.table td, .table th {
+    color: #c8c8c8 !important;
+}
+
+/* Nav section title */
+.nav-title {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #8a93a2;
+    letter-spacing: 0.05em;
+    padding-left: 0.5rem;
+}
