@@ -26,7 +26,7 @@ export async function apiCall(
     }
 
     const response = await fetch(url, options);
-
+    console.log("Fetching:", url, options);
     if (response.status === 401 && authRequired) {
         if (alterUnauthorized) alterUnauthorized();
         else AuthHelper.handleUnauthorized();

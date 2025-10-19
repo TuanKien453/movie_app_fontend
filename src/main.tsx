@@ -13,6 +13,7 @@ import MoviePage from "./pages/admin/MoviePage.tsx";
 import GenrePage from "./pages/admin/GenrePage.tsx";
 import HumanPage from "./pages/admin/HumanPage.tsx";
 import './style/index.css';
+import Detail from "./pages/Detail.tsx";
 import GenreTestPage from "./pages/GenreTestPage.tsx";
 
 const root = ReactDOM.createRoot(
@@ -34,6 +35,7 @@ root.render(
                     />
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/detail" element={<Detail />} />
                     <Route path="/" element={<DashboardLayout />}>
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="movies" element={<MoviePage />} />

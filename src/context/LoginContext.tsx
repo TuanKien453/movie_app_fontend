@@ -27,8 +27,7 @@ export function LoginProvider({children}: LoginProviderProps) {
                 AuthHelper.clearToken();
             }
             console.log("login status response: "+response);
-        }).catch(err => {
-            console.error("Failed to check login status:", (err as Error).message);
+        }).catch(() => {
             setIsLoggedIn(false);
         })
     },[]);

@@ -26,7 +26,7 @@ function SearchBar<T>({ handleChange, results, renderResult }: SearchBarProps<T>
                 onFocus={() => setIsActive(true)}
                 onBlur={() => setTimeout(() => setIsActive(false), 150)}
             />
-            {isActive && results?.length && renderResult && (
+            {isActive && results && results.length > 0 && renderResult && (
                 <div
                     style={{
                         position: "absolute",
@@ -44,6 +44,7 @@ function SearchBar<T>({ handleChange, results, renderResult }: SearchBarProps<T>
                     }}
                 >
                     {results.map((item, index) => (
+
                         <div key={index} className="p-1 border-bottom">
                             {renderResult(item)}
                         </div>

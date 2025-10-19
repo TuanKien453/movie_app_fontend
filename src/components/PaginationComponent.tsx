@@ -12,28 +12,38 @@ function PaginationComponent({ currentPage, maxPage, onPageChange }: PaginationP
     };
 
     const renderPages = () => {
-        const pages = [];
-        const delta = 1;
-        const start = Math.max(1, currentPage - delta);
-        const end = Math.min(maxPage, currentPage + delta);
+        const pages: (number | string)[] = [];
 
-        if (start > 1) pages.push(1);
-        if (start > 2) pages.push('...');
+        // Nếu số trang nhỏ, hiển thị hết
+        if (maxPage <= 5) {
+            for (let i = 1; i <= maxPage; i++) pages.push(i);
+        } else {
+            const delta = 1;
+            const left = Math.max(2, currentPage - delta);
+            const right = Math.min(maxPage - 1, currentPage + delta);
 
-        for (let i = start; i <= end; i++) pages.push(i);
+            pages.push(1); // luôn có trang đầu
 
-        if (end < maxPage - 1) pages.push('...');
-        if (end < maxPage) pages.push(maxPage);
+            if (left > 2) pages.push("...");
+
+            for (let i = left; i <= right; i++) {
+                pages.push(i);
+            }
+
+            if (right < maxPage - 1) pages.push("...");
+
+            pages.push(maxPage); // luôn có trang cuối
+        }
 
         return pages.map((page, idx) =>
-            typeof page === 'number' ? (
-                <li key={idx} className={`page-item ${page === currentPage ? 'active' : ''}`}>
+            typeof page === "number" ? (
+                <li key={idx} className={`page-item ${page === currentPage ? "active" : ""}`}>
                     <button className="page-link" onClick={() => handlePageChange(page)}>
                         {page}
                     </button>
                 </li>
             ) : (
-                <li key={idx} className="page-item disabled">
+                <li key={idx} className="page-item disabled" style={{ pointerEvents: "none" }}>
                     <span className="page-link">{page}</span>
                 </li>
             )

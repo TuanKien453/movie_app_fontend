@@ -1,24 +1,34 @@
-import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import {
+    createContext,
+    type ReactNode,
+    useContext,
+    useEffect,
+    useMemo,
+    useState
+} from "react";
+import buildQuery from "odata-query";
 import type { Movie } from "../model/Movie.ts";
 import { MovieApi } from "../api/MovieApi.ts";
 import type { ODataResponse } from "../shared/ODataResponse.ts";
 
+type FilterType = {
+    [key: string]: string | number | boolean | { [op: string]: any };
+};
+
 interface MovieContextType {
     movies: Movie[];
     loading: boolean;
-    count: boolean;
-    filter?: string[];
-    select?: string[];
-    expand?: string;
-    order?: string[];
     currentPage: number;
-    maxPage?: number;
-    setCurrentPage: (value: number) => void;
-    setCount: (value: boolean) => void;
-    setFilterState: (value?: string[]) => void;
-    setSelectState: (value?: string[]) => void;
-    setExpand: (value?: string) => void;
-    setOrderState: (value?: string[]) => void;
+    maxPage: number;
+    filter?: FilterType;
+    select?: string[];
+    expand?: string[];
+    orderBy?: { [key: string]: "asc" | "desc" }[];
+    setCurrentPage: (v: number) => void;
+    setFilter: (v?: any) => void;
+    setSelect: (v?: string[]) => void;
+    setExpand: (v?: string[]) => void;
+    setOrderBy: (v?: { [key: string]: "asc" | "desc" }[]) => void;
     refresh: () => void;
 }
 
@@ -33,64 +43,71 @@ export function MovieProvider({ children }: MovieProviderProps) {
 
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(true);
-    const [count, setCount] = useState(false);
-    const [filter, setFilterState] = useState<string[]>();
-    const [select, setSelectState] = useState<string[]>();
-    const [expand, setExpand] = useState<string>();
-    const [order, setOrderState] = useState<string[]>();
-    const [currentPage, setCurrentPage] = useState(0);
-    const [maxPage, setMaxPage] = useState<number>();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+
+    //  state OData
+    const [filter, setFilter] = useState<FilterType>();
+    const [select, setSelect] = useState<string[]>();
+    const [expand, setExpand] = useState<string[]>();
+    const [orderBy, setOrderBy] = useState<{ [key: string]: "asc" | "desc" }[]>();
 
     const movieApi = useMemo(() => new MovieApi(), []);
 
     const fetchMovies = async () => {
         setLoading(true);
+        const orderByString = orderBy
+            ?.map(obj => {
+                const [key, dir] = Object.entries(obj)[0];
+                return `${key} ${dir}`;
+            })
+            .join(",");
         try {
-            const response: ODataResponse<Movie> = await movieApi.get({
-                authRequired: false,
-                count: true,
-                filter: filter ? filter.join(" and ") : undefined,
-                select: select ? select.join(",") : undefined,
+            const query = buildQuery({
+                filter,
+                select,
                 expand,
-                order: order ? order.join(",") : undefined,
+                orderBy: orderByString,
                 top: pageSize,
-                skip: pageSize * currentPage
+                skip: pageSize * (currentPage - 1),
+                count: true
             });
 
-            setMovies(response.value);
+            const response: ODataResponse<Movie> = await movieApi.get(query);
 
-            if (response["@odata.count"] !== undefined) {
+            setMovies(response.value);
+            if (response["@odata.count"] !== undefined)
                 setMaxPage(Math.ceil(response["@odata.count"] / pageSize));
-            }
         } catch (err) {
             console.error("Failed to fetch movies:", err);
         } finally {
             setLoading(false);
         }
     };
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filter, select, expand, orderBy]);
 
     useEffect(() => {
         fetchMovies();
-    }, [count, filter, select, expand, order, currentPage]);
+    }, [currentPage, filter, select, expand, orderBy]);
 
     return (
         <MovieContext.Provider
             value={{
                 movies,
                 loading,
-                count,
+                currentPage,
+                maxPage,
                 filter,
                 select,
                 expand,
-                order,
-                currentPage,
-                maxPage,
+                orderBy,
                 setCurrentPage,
-                setCount,
-                setFilterState,
-                setSelectState,
+                setFilter,
+                setSelect,
                 setExpand,
-                setOrderState,
+                setOrderBy,
                 refresh: fetchMovies
             }}
         >
@@ -101,6 +118,7 @@ export function MovieProvider({ children }: MovieProviderProps) {
 
 export function useMovie(): MovieContextType {
     const context = useContext(MovieContext);
-    if (!context) throw new Error("useMovie must be used within a MovieProvider");
+    if (!context)
+        throw new Error("useMovie must be used within a MovieProvider");
     return context;
 }
