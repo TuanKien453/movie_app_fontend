@@ -6,7 +6,6 @@ import About from "./pages/About.tsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {LoginProvider} from "./context/LoginContext.tsx";
 import Login from "./pages/Login.tsx";
-import {MovieProvider} from "./context/MovieContext.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
 import DashboardLayout from "./layouts/DashboardLayout.tsx";
 import MoviePage from "./pages/admin/MoviePage.tsx";
@@ -25,14 +24,8 @@ root.render(
         <BrowserRouter>
             <LoginProvider>
                 <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <MovieProvider>
-                                <Home />
-                            </MovieProvider>
-                        }
-                    />
+                    <Route path="/" element={<Home />}/>
+                    <Route path="/home" element={<Home />}/>
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/detail" element={<Detail />} />

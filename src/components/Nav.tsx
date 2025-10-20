@@ -53,7 +53,7 @@ export default function Nav() {
     };
 
     return (
-        <nav className="w-100 bg-white shadow-sm px-3 py-2">
+        <nav className="w-100 shadow-sm px-3 py-2 bg-white bg-opacity-75">
             <div className="row align-items-center">
                 <div className="col-4 d-flex align-items-center gap-3">
                     <div className="fw-bold fs-4 text-primary">MyLogo</div>
@@ -82,7 +82,7 @@ export default function Nav() {
                 <div className="col-4 d-flex justify-content-end">
                     {isLoggedIn ? (
                         <button
-                            className="btn btn-outline-dark"
+                            className="btn btn-outline-primary"
                             onClick={() => (window.location.href = "/dashboard")}
                         >
                             Admin

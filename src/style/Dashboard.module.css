@@ -1,83 +1,75 @@
-.body {
-    background-color: #212631 !important;
-    color: #c8c8c8 !important;
+.dashboard {
+    background-color: #212631;
+    color: #c8c8c8;
 }
 
-/* === CARD, BOX, CHART CONTAINER === */
-.card,
-.card-body,
-.card-header,
-.card-footer {
-    background-color: #2a2f3c !important;
-    color: #c8c8c8 !important;
-    border: 1px solid #3c414d !important;
+.dashboard .card,
+.dashboard .card-body,
+.dashboard .card-header,
+.dashboard .card-footer {
+    background-color: #2a2f3c;
+    color: #c8c8c8;
+    border: 1px solid #3c414d;
 }
 
-/* Ghi đè mạnh cho các lớp bootstrap hay dùng */
-.bg-white,
-.bg-light,
-.text-bg-light,
-.text-bg-white {
-    background-color: #2a2f3c !important;
-    color: #c8c8c8 !important;
+.dashboard .bg-white,
+.dashboard .bg-light,
+.dashboard .text-bg-light,
+.dashboard .text-bg-white {
+    background-color: #2a2f3c;
+    color: #c8c8c8;
 }
 
-/* Một số lib tạo inline style nền trắng → fix luôn */
-[class*="card"],
-[class*="Card"],
-[class*="widget"],
-[class*="Widget"],
-[class*="chart"],
-[class*="Chart"] {
-    background-color: #2a2f3c !important;
-    color: #c8c8c8 !important;
+.dashboard [class*="card"],
+.dashboard [class*="Card"],
+.dashboard [class*="widget"],
+.dashboard [class*="Widget"],
+.dashboard [class*="chart"],
+.dashboard [class*="Chart"] {
+    background-color: #2a2f3c;
+    color: #c8c8c8;
 }
 
-/* ChartJS / Recharts wrapper */
-.recharts-wrapper,
-.recharts-surface {
-    background-color: #2a2f3c !important;
+.dashboard .recharts-wrapper,
+.dashboard .recharts-surface {
+    background-color: #2a2f3c;
 }
 
-/* Sidebar & header */
-.sidebar {
-    background-color: #2a2f3c !important;
+.dashboard .sidebar {
+    background-color: #2a2f3c;
     width: 250px;
     border-right: 1px solid #3c414d;
 }
 
-.header {
-    background-color: #2a2f3c !important;
+.dashboard .header {
+    background-color: #2a2f3c;
     border-bottom: 1px solid #3c414d;
 }
 
-/* Active / hover nav link */
-.nav-link.active,
-.nav-link:hover {
-    background-color: #3c414d !important;
-    color: #fff !important;
+.dashboard .nav-link.active,
+.dashboard .nav-link:hover {
+    background-color: #3c414d;
+    color: #fff;
 }
 
-/* Progress bar */
-.progress {
+.dashboard .progress {
     height: 0.5rem;
-    background-color: #3c414d !important;
+    background-color: #3c414d;
 }
 
-/* Table */
-.table {
-    --bs-table-bg: transparent !important;
-    --bs-table-border-color: #444 !important;
-    --bs-table-striped-bg: #3c414d !important;
-    color: #c8c8c8 !important;
+.dashboard .table {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: #444;
+    --bs-table-striped-bg: #3c414d;
+    color: #c8c8c8;
 }
 
-.table td, .table th {
-    color: #c8c8c8 !important;
+.dashboard .table td,
+.dashboard .table th {
+    color: #c8c8c8;
 }
 
-/* Nav section title */
-.nav-title {
+.dashboard .nav-title {
     text-transform: uppercase;
     font-size: 0.75rem;
     font-weight: bold;

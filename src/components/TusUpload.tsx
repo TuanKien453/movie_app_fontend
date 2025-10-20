@@ -43,6 +43,8 @@ const TusUpload: React.FC<TusUploadProps> = ({ forEpisodeId }) => {
                 alert("Upload failed: " + error);
                 setUploading(false);
                 uploadRef.current = null;
+
+                if (inputRef.current) inputRef.current.value = "";
             },
             onProgress(bytesUploaded, bytesTotal) {
                 const percent = ((bytesUploaded / bytesTotal) * 100).toFixed(2);

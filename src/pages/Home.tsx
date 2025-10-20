@@ -1,72 +1,115 @@
+import { useEffect, useMemo, useState } from "react";
 import Nav from "../components/Nav.tsx";
 import FilmItem from "../components/FilmItem.tsx";
 import PaginationComponent from "../components/PaginationComponent.tsx";
-import { useMovie } from "../context/MovieContext.tsx";
 import Loading from "../components/Loading.tsx";
-import {GenreApi} from "../api/GenreApi.ts";
-import {useEffect, useMemo, useState} from "react";
-import type {Genre} from "../model/Genre.ts";
+import { MovieApi } from "../api/MovieApi.ts";
+import { GenreApi } from "../api/GenreApi.ts";
+import type { Movie } from "../model/Movie.ts";
+import type { Genre } from "../model/Genre.ts";
+import buildQuery from "odata-query";
+import TusUpload from "../components/TusUpload.tsx";
+import VideoPlayer from "../components/VideoPlayer.tsx";
+
+const API_DOMAIN = import.meta.env.VITE_BASE_API_ENDPOINT;
 
 function Home() {
-    const { setCurrentPage, currentPage, maxPage, movies, loading,setOrderBy} = useMovie();
-    const [genres,setGenres] = useState<Genre[]>([]);
-    const genreApi: GenreApi = useMemo(()=> new GenreApi(),[]);
+    const pageSize = 10;
+    const movieApi = useMemo(() => new MovieApi(), []);
+    const genreApi = useMemo(() => new GenreApi(), []);
 
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 11 }, (_, i) => currentYear - i);
+    const [movies, setMovies] = useState<Movie[]>([]);
+    const [genres, setGenres] = useState<Genre[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const handlePageChange = (page: number) => {
-        if (page !== currentPage && page >= 1 && page <= maxPage) {
-            setCurrentPage(page);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+
+    //selected
+    const [selectedGenre, setSelectedGenre] = useState("All");
+    const [selectedYear, setSelectedYear] = useState("All");
+
+    const buildFilter = (): string => {
+        const filters: string[] = [];
+        if (selectedGenre !== "All")
+            filters.push(`MovieGenres/any(m: m/Genre/Name eq '${selectedGenre}')`);
+        if (selectedYear !== "All") {
+            if (selectedYear.startsWith("before"))
+                filters.push(`year(ReleaseDate) lt ${selectedYear.split(" ")[1]}`);
+            else
+                filters.push(`year(ReleaseDate) eq ${selectedYear}`);
+        }
+        return filters.join(" and ");
+    };
+
+    const fetchMovies = async () => {
+        setLoading(true);
+        try {
+            const filter = buildFilter();
+
+            let query = buildQuery({
+                expand: ["MovieGenres/Genre"],
+                top: pageSize,
+                skip: pageSize * (currentPage - 1),
+                count: true
+            });
+            if (filter) query += `&$filter=${filter}`;
+
+            const res = await movieApi.get(query);
+            setMovies(res.value);
+            if (res["@odata.count"] !== undefined)
+                setMaxPage(Math.ceil(res["@odata.count"] / pageSize));
+        } finally {
+            setLoading(false);
         }
     };
 
+    useEffect(() => {
+        fetchMovies();
+    }, [currentPage, selectedGenre, selectedYear]);
 
     useEffect(() => {
-        setOrderBy([{ title: "asc" }]);
-       genreApi.get().then(result => {
-           setGenres(result.value);
-       })
-    },[])
+        genreApi.get().then((res) => setGenres(res.value));
+    }, []);
 
-    const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value;
-        console.log(value)
-    };
-
-
-    if (loading) {
-        return (
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100vh",
-                }}
-            >
-                <Loading size="lg" />
-            </div>
-        );
-    }
+    const years = Array.from({ length: 11 }, (_, i) => new Date().getFullYear() - i);
 
     return (
         <>
             <Nav />
+            <VideoPlayer
+                src="https://localhost:7190/api/Episode/4/video"
+            />
+            <TusUpload forEpisodeId={'4'}></TusUpload>
             <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <div></div>
                     <div className="d-flex gap-2 align-items-center">
-                        <select className="form-select w-auto" onChange={handleGenreChange}>
-                            <option value="">All genres</option>
-                            {genres.map(genre => (
-                                <option key={genre.id} value={genre.name}>
-                                    {genre.name}
+                        <select
+                            className="form-select shadow-sm border-0 rounded-pill px-3 py-2"
+                            value={selectedGenre}
+                            onChange={(e) => {
+                                setSelectedGenre(e.target.value);
+                                setCurrentPage(1);
+                            }}
+                        >
+                            <option value="All">All genres</option>
+                            {genres.map((g) => (
+                                <option key={g.id} value={g.name}>
+                                    {g.name}
                                 </option>
                             ))}
                         </select>
-                        <select className="form-select w-auto">
-                            <option value="">Year</option>
+
+                        <select
+                            className="form-select shadow-sm border-0 rounded-pill px-3 py-2"
+                            value={selectedYear}
+                            onChange={(e) => {
+                                setSelectedYear(e.target.value);
+                                setCurrentPage(1);
+                            }}
+                        >
+                            <option value="All">All years</option>
                             {years.map((year) => (
                                 <option key={year} value={year}>
                                     {year}
@@ -78,15 +121,9 @@ function Home() {
                         </select>
                     </div>
                 </div>
+
                 {loading ? (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            minHeight: "400px",
-                        }}
-                    >
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
                         <Loading size="lg" />
                     </div>
                 ) : (
@@ -97,9 +134,7 @@ function Home() {
                                     id={movie.id}
                                     title={movie.title}
                                     imageUrl={
-                                        movie.posterSource
-                                            ? movie.posterSource
-                                            : `https://picsum.photos/200/300?random=${movie.id}`
+                                        `${API_DOMAIN}/posters/${movie.posterSource}`
                                     }
                                 />
                             </div>
@@ -107,12 +142,11 @@ function Home() {
                     </div>
                 )}
 
-
                 <div className="d-flex justify-content-center mt-4">
                     <PaginationComponent
                         currentPage={currentPage}
                         maxPage={maxPage}
-                        onPageChange={handlePageChange}
+                        onPageChange={setCurrentPage}
                     />
                 </div>
             </div>
