@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.tsx";
@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <BrowserRouter>
             <LoginProvider>
                 <Routes>
@@ -28,7 +28,7 @@ root.render(
                     <Route path="/home" element={<Home />}/>
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/detail" element={<Detail />} />
+                    <Route path="/detail/:id" element={<Detail />} />
                     <Route path="/" element={<DashboardLayout />}>
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="movies" element={<MoviePage />} />
@@ -41,5 +41,5 @@ root.render(
                 </Routes>
             </LoginProvider>
         </BrowserRouter>
-    </React.StrictMode>
+    // </React.StrictMode>
 );

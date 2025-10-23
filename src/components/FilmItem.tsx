@@ -12,7 +12,7 @@ export default function FilmItem({ id, title, imageUrl }: FilmItemProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/film/${id}`);
+        navigate(`/detail/${id}`);
     };
 
     return (

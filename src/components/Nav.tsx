@@ -49,7 +49,7 @@ export default function Nav() {
     };
 
     const handleClick = (id: number) => {
-        navigate(`/movie/${id}`);
+        navigate(`/detail/${id}`);
     };
 
     return (

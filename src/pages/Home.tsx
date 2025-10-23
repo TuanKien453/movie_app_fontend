@@ -9,7 +9,7 @@ import type { Movie } from "../model/Movie.ts";
 import type { Genre } from "../model/Genre.ts";
 import buildQuery from "odata-query";
 import TusUpload from "../components/TusUpload.tsx";
-import VideoPlayer from "../components/VideoPlayer.tsx";
+import {useLocation, useSearchParams} from "react-router-dom";
 
 const API_DOMAIN = import.meta.env.VITE_BASE_API_ENDPOINT;
 
@@ -28,19 +28,40 @@ function Home() {
     //selected
     const [selectedGenre, setSelectedGenre] = useState("All");
     const [selectedYear, setSelectedYear] = useState("All");
-
+    const [selectedType, setSelectedType] = useState("All");
     const buildFilter = (): string => {
         const filters: string[] = [];
         if (selectedGenre !== "All")
             filters.push(`MovieGenres/any(m: m/Genre/Name eq '${selectedGenre}')`);
+
         if (selectedYear !== "All") {
             if (selectedYear.startsWith("before"))
                 filters.push(`year(ReleaseDate) lt ${selectedYear.split(" ")[1]}`);
             else
                 filters.push(`year(ReleaseDate) eq ${selectedYear}`);
         }
+
+        if (selectedType !== "All") {
+            if (selectedType === "Movie")
+                filters.push(`Parts/$count eq 1 and Parts/any(p: p/Episodes/$count eq 1)`);
+            else if (selectedType === "Series")
+                filters.push(`Parts/$count gt 1 or Parts/any(p: p/Episodes/$count gt 1)`);
+        }
+
         return filters.join(" and ");
     };
+    const [searchParams] = useSearchParams();
+    const location = useLocation();
+    //handle param genre
+    useEffect(() => {
+        const genreParam = searchParams.get("genre");
+        if (genreParam) {
+            const genreObj = genres.find(g => g.id.toString() === genreParam || g.name === genreParam);
+            if (genreObj) {
+                setSelectedGenre(genreObj.name);
+            }
+        }
+    }, [location.search, genres]);
 
     const fetchMovies = async () => {
         setLoading(true);
@@ -66,7 +87,7 @@ function Home() {
 
     useEffect(() => {
         fetchMovies();
-    }, [currentPage, selectedGenre, selectedYear]);
+    }, [currentPage, selectedGenre, selectedYear, selectedType]);
 
     useEffect(() => {
         genreApi.get().then((res) => setGenres(res.value));
@@ -77,16 +98,15 @@ function Home() {
     return (
         <>
             <Nav />
-            <VideoPlayer
-                src="https://localhost:7190/api/Episode/4/video"
-            />
+
             <TusUpload forEpisodeId={'4'}></TusUpload>
             <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <div></div>
                     <div className="d-flex gap-2 align-items-center">
                         <select
-                            className="form-select shadow-sm border-0 rounded-pill px-3 py-2"
+                            className="form-select shadow-sm border-0 rounded-pill py-2"
+
                             value={selectedGenre}
                             onChange={(e) => {
                                 setSelectedGenre(e.target.value);
@@ -102,7 +122,7 @@ function Home() {
                         </select>
 
                         <select
-                            className="form-select shadow-sm border-0 rounded-pill px-3 py-2"
+                            className="form-select shadow-sm border-0 rounded-pill py-2"
                             value={selectedYear}
                             onChange={(e) => {
                                 setSelectedYear(e.target.value);
@@ -119,6 +139,20 @@ function Home() {
                                 Before {years[years.length - 1]}
                             </option>
                         </select>
+
+                        <select
+                            className="form-select shadow-sm border-0 rounded-pill py-2"
+                            value={selectedType}
+                            onChange={(e) => {
+                                setSelectedType(e.target.value);
+                                setCurrentPage(1);
+                            }}
+                        >
+                            <option value="All">All types</option>
+                            <option value="Movie">Movie</option>
+                            <option value="Series">Series</option>
+                        </select>
+
                     </div>
                 </div>
 
