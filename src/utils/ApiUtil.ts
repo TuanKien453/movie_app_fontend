@@ -9,33 +9,39 @@ export async function apiCall(
     rawResponse: boolean = false,
     signal?: AbortSignal
 ): Promise<any> {
-    const accessToken = AuthHelper.getToken();
+    try {
+        const accessToken = AuthHelper.getToken();
 
-    const options: RequestInit = {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        signal,
-    };
+        const options: RequestInit = {
+            method,
+            headers: {},
+            signal,
+        };
 
-    if (accessToken) {
-        (options.headers as Record<string, string>)['Authorization'] = `Bearer ${accessToken}`;
+        if (body && !(body instanceof FormData)) {
+            options.headers = { 'Content-Type': 'application/json' };
+            options.body = JSON.stringify(body);
+        } else if (body) {
+            options.body = body;
+        }
+
+        if (accessToken) {
+            (options.headers as Record<string, string>)['Authorization'] = `Bearer ${accessToken}`;
+        }
+        console.log(`fecthing: ${url}`)
+        const response = await fetch(url, options);
+        if (response.status === 401 && authRequired) {
+            if (alterUnauthorized) alterUnauthorized();
+            else AuthHelper.handleUnauthorized();
+            return Promise.reject(new Error("Unauthorized"));
+        }
+
+        if (!response.ok) {
+            return Promise.reject(new Error(await response.text()));
+        }
+
+        return rawResponse ? response : await response.json();
+    } catch (err) {
+        return Promise.reject(err);
     }
-
-    if (body) {
-        options.body = JSON.stringify(body);
-    }
-
-    const response = await fetch(url, options);
-    console.log("Fetching:", url, options);
-    if (response.status === 401 && authRequired) {
-        if (alterUnauthorized) alterUnauthorized();
-        else AuthHelper.handleUnauthorized();
-        throw new Error("Unauthorized");
-    }
-
-    if (!response.ok) {
-        throw new Error(await response.text());
-    }
-
-    return rawResponse ? response : await response.json();
 }

@@ -17,19 +17,23 @@ function Detail() {
 
         const filter = `id eq ${id}`;
         let query = buildQuery({
-            expand: ["MovieGenres/Genre", "Parts", "MovieCrews/Human"],
+            expand: ["MovieGenres/Genre", "Parts/Episodes", "MovieCrews/Human"],
         });
         query += `&$filter=${filter}`;
 
         movieApi.get(query).then(result => {
+            if(result.value.length ==0) navigate("/error");
             setMovieData(result.value[0]);
-            console.log(result.value[0]);
+            console.log(result.value);
         });
     }, [id, movieApi]);
 
-    function handlePartClick(part:number) {
-        console.log("Selected part:", part);
-
+    function handlePartClick(partId: number) {
+        const part = movieData?.parts?.find(p => p.id === partId);
+        if (part) {
+            console.log("Selected part:", part);
+            navigate(`/watch/${part.id}`);
+        }
     }
     return (
         <>
@@ -61,7 +65,7 @@ function Detail() {
                         <div className="row g-5 align-items-start">
                             <div className="col-md-3 text-center">
                                 <img
-                                    src={`${API_DOMAIN}/posters/${movieData?.posterSource}`}
+                                    src={movieData?.posterSource ? `${API_DOMAIN}/posters/${movieData.posterSource}` : ''}
                                     alt={movieData?.title}
                                     className="img-fluid rounded-4 shadow-sm"
                                     style={{border: "1px solid rgba(0,0,0,0.08)"}}
@@ -72,16 +76,17 @@ function Detail() {
                                     style={{overflowX: "auto", maxWidth: "100%", scrollbarWidth: "thin"}}
                                 >
                                     {movieData?.parts
-                                        ?.slice()
+                                        ?.filter(part => part.episodes && part.episodes.length > 0)
+                                        .slice()
                                         .sort((a, b) => a.partNumber - b.partNumber)
                                         .map((part, index) => (
                                             <button
                                                 key={index}
                                                 className="btn btn-outline-primary btn-sm rounded-pill px-3 border-2 flex-shrink-0"
-                                                style={{color: "#4fa3d1", borderColor: "#4fa3d1"}}
+                                                style={{ color: "#4fa3d1", borderColor: "#4fa3d1" }}
                                                 onClick={() => handlePartClick(part.id)}
                                             >
-                                                {` ${part.partName}`}
+                                                {part.partName}
                                             </button>
                                         ))}
                                 </div>

@@ -17,6 +17,7 @@ export default function VideoPlayer({ src }: VideoPlayerProps) {
                     },
                 ],
             }}
+            options={{ autoplay: true , settings: ["speed", "quality"],}}
         />
     );
 }

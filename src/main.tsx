@@ -14,6 +14,8 @@ import HumanPage from "./pages/admin/HumanPage.tsx";
 import './style/index.css';
 import Detail from "./pages/Detail.tsx";
 import GenreTestPage from "./pages/GenreTestPage.tsx";
+import Watch from "./pages/Watch.tsx";
+import Error from "./pages/Error.tsx";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -29,13 +31,14 @@ root.render(
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/detail/:id" element={<Detail />} />
+                    <Route path="/watch/:id" element={<Watch />} />
                     <Route path="/" element={<DashboardLayout />}>
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="movies" element={<MoviePage />} />
                         <Route path="genres" element={<GenrePage />} />
                         <Route path="humans" element={<HumanPage />} />
                     </Route>
-                    <Route path="*" element={<>Not Found</>} />
+                    <Route path="*" element={<Error/>} />
                     <Route path="/admin/test-genre" element={<GenreTestPage />} />
 
                 </Routes>
