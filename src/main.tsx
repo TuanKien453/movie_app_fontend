@@ -8,14 +8,14 @@ import {LoginProvider} from "./context/LoginContext.tsx";
 import Login from "./pages/Login.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
 import DashboardLayout from "./layouts/DashboardLayout.tsx";
-import MoviePage from "./pages/admin/MoviePage.tsx";
 import GenrePage from "./pages/admin/GenrePage.tsx";
 import HumanPage from "./pages/admin/HumanPage.tsx";
 import './style/index.css';
 import Detail from "./pages/Detail.tsx";
-import GenreTestPage from "./pages/GenreTestPage.tsx";
 import Watch from "./pages/Watch.tsx";
 import Error from "./pages/Error.tsx";
+import MoviePage from "./pages/admin/MoviePage.tsx";
+import MovieContentPage from "./pages/admin/MovieContentPage.tsx";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -37,9 +37,9 @@ root.render(
                         <Route path="movies" element={<MoviePage />} />
                         <Route path="genres" element={<GenrePage />} />
                         <Route path="humans" element={<HumanPage />} />
+                        <Route path="movie/:movieId/content" element={<MovieContentPage />} />
                     </Route>
                     <Route path="*" element={<Error/>} />
-                    <Route path="/admin/test-genre" element={<GenreTestPage />} />
 
                 </Routes>
             </LoginProvider>

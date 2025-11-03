@@ -9,8 +9,6 @@ import type { Movie } from "../model/Movie.ts";
 import type { Genre } from "../model/Genre.ts";
 import buildQuery from "odata-query";
 import {useLocation, useSearchParams} from "react-router-dom";
-import AddPoster from "../components/AddPoster.tsx";
-import TusUpload from "../components/TusUpload.tsx";
 
 const API_DOMAIN = import.meta.env.VITE_BASE_API_ENDPOINT;
 
@@ -100,7 +98,6 @@ function Home() {
         <>
             <Nav />
 
-            <TusUpload forEpisodeId={"4"}/>
             <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <div></div>

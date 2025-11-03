@@ -26,8 +26,8 @@ export class Movie extends BaseEntity {
 
         this.duration = data.duration;
         this.country = data.country;
-        this.posterSource = data.posterUrl;
-        this.trailerSource = data.trailerUrl;
+        this.posterSource = data.posterSource;
+        this.trailerSource = data.trailerSource;
 
         this.parts = data.parts?.map((p: any) => new Part(p));
         this.movieCrews = data.movieCrews?.map((mc: any) => new MovieCrew(mc));

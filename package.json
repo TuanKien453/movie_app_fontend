@@ -23,6 +23,7 @@
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.8.2",
+    "react-select": "^5.10.2",
     "tus-js-client": "^4.3.1"
   },
   "devDependencies": {

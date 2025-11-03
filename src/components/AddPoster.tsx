@@ -6,7 +6,7 @@ interface AddPosterProps {
 }
 const API_DOMAIN = import.meta.env.VITE_BASE_API_ENDPOINT;
 
-function AddPoster({ forMovieId }: AddPosterProps) {
+function AddPoster({  forMovieId }: AddPosterProps) {
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string>("");
     const [success, setSuccess] = useState<string>("");

@@ -6,9 +6,10 @@ const API_DOMAIN = import.meta.env.VITE_BASE_API_ENDPOINT;
 
 interface TusUploadProps {
     forEpisodeId: string;
+    onUploadSuccess?: (url: string) => void;
 }
 
-const TusUpload: React.FC<TusUploadProps> = ({ forEpisodeId }) => {
+const TusUpload: React.FC<TusUploadProps> = ({ forEpisodeId,onUploadSuccess }) => {
     const [progress, setProgress] = useState(0);
     const [isUploading, setUploading] = useState(false);
     const [filename, setFilename] = useState<string | null>(null);
@@ -51,13 +52,22 @@ const TusUpload: React.FC<TusUploadProps> = ({ forEpisodeId }) => {
                 setProgress(parseFloat(percent));
             },
             onSuccess() {
+                // --- CHỈNH SỬA PHẦN NÀY ---
+                console.log("Upload thành công! URL:", upload.url);
+
+                // 1. Gọi callback về cho cha (EpisodeFormModal)
+                if (onUploadSuccess && upload.url) {
+                    onUploadSuccess(upload.url);
+                }
+
+                // 2. Giữ logic cũ của bạn
                 alert("✅ Upload complete!");
                 setLastUploaded(file.name);
                 setUploading(false);
                 setFilename(null);
                 uploadRef.current = null;
-
                 if (inputRef.current) inputRef.current.value = "";
+                // --- KẾT THÚC CHỈNH SỬA ---
             },
         });
 

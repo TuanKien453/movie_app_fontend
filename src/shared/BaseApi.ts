@@ -43,7 +43,7 @@ export abstract class BaseApi<T extends BaseEntity> {
 
     async update(entity: T, authRequired: boolean = false): Promise<boolean> {
         try {
-            await apiCall(`${this.apiUrl}/${entity.id}/update`, 'PUT', entity, authRequired)
+            await apiCall(`${this.apiUrl}/${entity.id}`, 'PUT', entity, authRequired)
             return true
         } catch {
             return false
@@ -52,7 +52,7 @@ export abstract class BaseApi<T extends BaseEntity> {
 
     async delete(id: string, authRequired: boolean = false): Promise<boolean> {
         try {
-            await apiCall(`${this.apiUrl}/${id}/remove`, 'DELETE', null, authRequired)
+            await apiCall(`${this.apiUrl}/${id}`, 'DELETE', null, authRequired)
             return true
         } catch {
             return false

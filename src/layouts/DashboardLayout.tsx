@@ -6,7 +6,7 @@ import styles from '../style/Dashboard.module.css';
 
 const DashboardLayout: React.FC = () => {
     return (
-        <div className={styles.body}>
+        <div className={styles.dashboard}>
             <div className="d-flex" style={{ minHeight: '100vh' }}>
                 {/* Sidebar */}
                 <Sidebar />
